@@ -1,0 +1,70 @@
+#웹크롤링_면접질문
+
+import urllib.request #requests : web url에 접근 및 html 받아옴
+from bs4 import BeautifulSoup #url로부터 받아온 html text를 parser하여 원하는 정보 추출
+
+url = "https://people.incruit.com/interview/intvtableview.asp?comp=ce1f7beb4d7317f640815b703f6f1fb24d5f6bdbdd288234513d17d55389e432&compty=1&sot=1&page=1"
+req = urllib.request.urlopen(url)
+res = req.read()
+
+soup = BeautifulSoup(res, 'html.parser')
+keywords = soup.find_all('div', span = "detail_info")
+
+print(keywords)
+
+
+#login set
+
+url_log = "https://id.payco.com/oauth2.0/authorize?response_type=code&client_id=3RDvvpbFXPDNA2XkpbZc&serviceProviderCode=FRIENDS&redirect_uri=https%3A%2F%2Fedit%2Eincruit%2Ecom%2Fg%5Fcommon%2Fbizcommon%2Fv2%2Fpayco%2Easp%3F1%3D1%26kl%3Dtrue"
+html_pw = "pw"
+login_bt = '//*[@id="loginBtn"]'
+
+
+#packages
+import pandas as pd
+from bs4 import BeautifulSoup
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+import time
+import re
+
+chrome_options = Options()
+chrome_options.add_argument('--headless')
+chrome_options.add_argument('--no-sandbox')
+chrome_options.add_argument('--disable-dev-shm-usage')
+driver = webdriver.Chrome("chromedriver.exe", options=chrome_options)
+
+
+
+#parsing : delete tags and set by BeautifulSoup
+
+def remove_html_tags(data) :
+    p = re.compile(r'<.*?>')
+    return p.sub(' ', str(data))
+
+def get_crawul(url) :
+    response = driver.get(url)
+    html = driver.page_source
+    soup7 = BeautifulSoup(html, 'html.parser')
+    ex_id_divs = soup7.find('div', {'id' : 'view_content'})
+    crawl_data = remove_html_tags(ex_id_divs)
+    return crawl_data
+    
+    
+
+
+#login
+
+driver.implicitly_wait(3)
+driver.get(url_log)
+login_x_path = login_bt
+driver.find_element_by_name('id').send_keys('<bins0617@naver.com>')
+driver.find_element_by_name('pw').send_keys('<159159gkgk*>')
+driver.find_element_by_xpath(login_x_path).click()
+
+
+
+#web crawling
+
+url_sample = "https://people.incruit.com/interview/intvtableview.asp?comp=CE1F7BEB4D7317F640815B703F6F1FB24D5F6BDBDD288234513D17D55389E432&compty=1&sot=1&page=1"
+for i in range()
