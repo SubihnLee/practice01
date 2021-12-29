@@ -1,0 +1,59 @@
+##web crawling_welfare
+
+
+
+#packages
+
+import pandas as pd
+from bs4 import BeautifulSoup #url로부터 받아온 html text를 parser하여 원하는 정보 추출
+from selenium import webdriver
+import urllib.request #requests : web url에 접근 및 html 받아옴
+from selenium.webdriver.chrome.options import Options
+import time
+import re
+from selenium.webdriver import Actionchains
+
+chrome_options = Options()
+chrome_options.add_argument('--headless')
+chrome_options.add_argument('--no-sandbox')
+chrome_options.add_argument('--disable-dev-shm-usage')
+driver = webdriver.Chrome("chromedriver.exe", options=chrome_options)
+
+
+
+#기업배너클릭
+
+cop = driver.find_element_by_xpath('//*[@id="listCompanies"]/div/div[1]/section[' + str( j + 1) + ']/div/div/dl[1]/dt/a')
+cop.click()
+
+
+
+#복지탭클립
+
+tap = driver.find_element_by_xpath('//*[@id="viewCompaniesMenu"]/ul/li[6]/a/h2')
+tap.click()
+
+
+
+#web crawling
+
+url = driver.current_url
+        req = urllib.request.urlopen(url) #url정보가져옴
+        res = req.read() #url에 있는 html data를 바이트 문자열로 반환
+
+        soup = BeautifulSoup(res, 'html.parser') #html정보 파싱
+        keywords = soup.find_all('div', "accord_box_ty1 welfare_category")
+        
+        
+        
+import re
+
+
+data = ()'안녕, 1234, -'
+data = data.split()
+
+for i range(len(data)+1)
+    type(data[i]) = 
+
+
+
